@@ -87,6 +87,42 @@ const populate = async (): Promise<void> => {
                 question: 'Anterioridad de algo respecto de otra cosa en tiempo u orden.',
                 result: 'Prioridad'
             },
+            {
+                question: 'Órgano respiratorio de los peces formado por láminas o filamentos.',
+                result: 'Branquia'
+            },
+            {
+                question: 'Apellido del ingeniero francés que, junto a Arthur C. Krebs, construyó el dirigible militar La France en 1884.',
+                result: 'Renard'
+            },
+            {
+                question: 'Danza popular brasileña de influencia africana cantada de compás binario.',
+                result: 'Samba'
+            },
+            {
+                question: 'Máquina de juegos de azar que funciona introduciendo monedas.',
+                result: 'Tragaperras'
+            },
+            {
+                question: 'Atribuirse y usar un título o cargo ajeno como si fuera propio.',
+                result: 'Usurpar'
+            },
+            {
+                question: 'Lugar cerrado o cubierto construido para ser habitado por personas.',
+                result: 'Vivienda'
+            },
+            {
+                question: 'Ciudad inglesa cuya universidad compite cada año en una popular regata contra la universidad de Cambridge.',
+                result: 'Oxford'
+            },
+            {
+                question: 'Persona que aplica el derecho sin rigor y desenfadadamente.',
+                result: 'Leguleyo'
+            },
+            {
+                question: 'Movimiento repetido y violento de un lado a otro.',
+                result: 'Zarandeo'
+            },
         ]
     });
     await first.save();
