@@ -10,5 +10,3 @@ circleManager.init();
 document.querySelector('#next').addEventListener('click', () => {
    circleManager.next();
 });
-
-setInterval(() => circleManager.next(), 500);

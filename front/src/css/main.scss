@@ -77,6 +77,9 @@ body {
       border: 1px solid #1c1c1c;
       padding: 15px;
       font-size: 1.6em;
+      display: block;
+      width: 80%;
+      margin: 0 auto;
     }
 
     #active-letter {
@@ -95,7 +98,7 @@ body {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    background: #ffeb3b;
+    background: pink;
     border-radius: 50%;
     user-select: none;
     box-sizing: border-box;
