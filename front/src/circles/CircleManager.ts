@@ -36,6 +36,7 @@ export default class CircleManager {
         this.generate();
         this.initTimer();
         this.setActiveQuestion();
+        this.initForm();
     }
 
     private initTimer(): void {
@@ -175,5 +176,14 @@ export default class CircleManager {
     private setActiveQuestion() {
         const element = document.querySelector('#active-question');
         element.innerHTML = `${this.questionary.questions[this.activeIndex].question}`;
+    }
+
+    private initForm() {
+        const element = document.querySelector('#awnser-form');
+        element.addEventListener('submit', e => {
+           e.preventDefault();
+
+
+        });
     }
 }
