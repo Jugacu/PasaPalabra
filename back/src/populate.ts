@@ -64,6 +64,10 @@ const populate = async (): Promise<void> => {
                 result: 'Jornada'
             },
             {
+                question: 'LETRA K',
+                result: 'K'
+            },
+            {
                 question: 'Apellido del poeta ruso autor de la obra La muerte del poeta de 1837.',
                 result: 'Lérmontov'
             },
@@ -110,6 +114,10 @@ const populate = async (): Promise<void> => {
             {
                 question: 'Lugar cerrado o cubierto construido para ser habitado por personas.',
                 result: 'Vivienda'
+            },
+            {
+                question: 'LETRA W',
+                result: 'W'
             },
             {
                 question: 'Ciudad inglesa cuya universidad compite cada año en una popular regata contra la universidad de Cambridge.',
