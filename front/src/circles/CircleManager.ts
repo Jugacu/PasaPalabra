@@ -181,9 +181,16 @@ export default class CircleManager {
     private initForm() {
         const element = document.querySelector('#awnser-form');
         element.addEventListener('submit', e => {
-           e.preventDefault();
-
-
+            e.preventDefault();
+            const answerEl = document.querySelector<HTMLInputElement>('#answer');
+            if (answerEl.value.toLowerCase() === this.questionary.questions[this.activeIndex].result.toLowerCase()) {
+                this.activeCorrect();
+                this.next();
+            } else {
+                this.activeError();
+                this.next();
+            }
+            answerEl.value = '';
         });
     }
 }
