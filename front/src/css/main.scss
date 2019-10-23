@@ -1,0 +1,128 @@
+@import "circle";
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+#timer, #score {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  align-content: center;
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  padding: 50px;
+  width: 50px;
+  height: 50px;
+  border: 2px solid black;
+  border-radius: 50%;
+
+  #time {
+    font-size: 2em;
+    font-weight: 600;
+  }
+}
+
+#score {
+  right: 15px;
+  left: initial;
+  text-align: center;
+  width: 60px;
+  height: 60px;
+
+  #correct, #incorrect {
+    font-weight: 600;
+  }
+
+  #correct {
+    color: green;
+  }
+
+  #incorrect {
+    color: red;
+  }
+}
+
+#alignment {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  #question {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 4;
+
+    h4 {
+      font-weight: 400;
+      font-size: 2em;
+    }
+
+    h3 {
+      font-size: 2.1em;
+      line-height: 1.2em;
+      font-weight: 400;
+    }
+
+    input {
+      border: 1px solid #1c1c1c;
+      padding: 15px;
+      font-size: 1.6em;
+    }
+
+    #active-letter {
+      font-weight: bold;
+    }
+  }
+}
+
+#circle-wrapper {
+  @include on-circle($item-count: 27, $circle-size: 800px, $item-size: 60px);
+  margin: 0 auto;
+
+  .circle {
+    width: 60px;
+    height: 60px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffeb3b;
+    border-radius: 50%;
+    user-select: none;
+    box-sizing: border-box;
+    color: white;
+  }
+
+  .passed {
+    background: #ffeb3b;
+  }
+
+  .pending {
+    background: #004b8d;
+  }
+
+  .active {
+    animation: blinker 1.5s linear infinite;
+  }
+
+  .error {
+    background: #f44336;
+  }
+
+  .correct {
+    background: green;
+  }
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
