@@ -1,7 +1,13 @@
+import Questionary from '../types/Questionary';
+import APIResponse from "../types/APIResponse";
+
 export default class CircleManager {
 
     private circles: HTMLElement[] = [];
     private activeIndex = 0;
+    private time = 0;
+
+    private questionary: Questionary;
 
     public constructor(
         private readonly container: HTMLElement
@@ -13,8 +19,45 @@ export default class CircleManager {
 
     }
 
+    public async init(): Promise<void> {
 
-    public generate(): void {
+        const response = await fetch('http://localhost:3500/questionary/random');
+        let json: APIResponse<Questionary>;
+
+        try {
+            json = await response.json();
+            this.questionary = json.response;
+        } catch (e) {
+            throw new Error('Error while fetching the API');
+        }
+
+        console.log(this.questionary.questions)
+
+        this.generate();
+        this.initTimer();
+        this.setActiveQuestion();
+    }
+
+    private initTimer(): void {
+        this.time = this.questionary.timer;
+        this.timer();
+    }
+
+    private timer(): void {
+        const el = document.querySelector('#time');
+        this.time--;
+        el.innerHTML = `${this.time}`;
+
+        if (this.time === 0) {
+            return;
+        }
+
+        setTimeout(() => {
+            this.timer();
+        }, 1000);
+    }
+
+    private generate(): void {
         // CleanUp
         this.circles = [];
         this.container.innerHTML = '';
@@ -61,6 +104,8 @@ export default class CircleManager {
 
         const activeLetter = document.querySelector('#active-letter');
         activeLetter.innerHTML = this.circles[index].innerText;
+
+        this.setActiveQuestion();
     }
 
     public next(): void {
@@ -127,4 +172,8 @@ export default class CircleManager {
         document.querySelector('#incorrect').innerHTML = `${incorrect}`;
     }
 
+    private setActiveQuestion() {
+        const element = document.querySelector('#active-question');
+        element.innerHTML = `${this.questionary.questions[this.activeIndex].question}`;
+    }
 }

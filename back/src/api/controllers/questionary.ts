@@ -23,6 +23,6 @@ export const random = async (req: Request, res: Response) => {
 
     res.status(200).json({
         status: res.statusCode,
-        result: questionary
+        response: questionary
     });
 };

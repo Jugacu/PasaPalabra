@@ -5,8 +5,10 @@ import CircleManager from './circles/CircleManager';
 const circleWrapper = document.querySelector<HTMLElement>('#circle-wrapper');
 const circleManager = new CircleManager(circleWrapper);
 
-circleManager.generate();
+circleManager.init();
 
-setInterval(() => {
-    circleManager.next();
-}, 1000);
+document.querySelector('#next').addEventListener('click', () => {
+   circleManager.next();
+});
+
+setInterval(() => circleManager.next(), 500);
