@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Jugacu/thisisnotforagerMapEditor.git"
+    "url": "git+https://github.com/Jugacu/PasaPalabra.git"
   },
   "author": "Jugacu",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Jugacu/thisisnotforagerMapEditor/issues"
+    "url": "https://github.com/Jugacu/PasaPalabraissues"
   },
-  "homepage": "https://github.com/Jugacu/thisisnotforagerMapEditor#readme",
+  "homepage": "https://github.com/Jugacu/PasaPalabra#readme",
   "dependencies": {
     "awesome-typescript-loader": "^5.2.1",
     "css-loader": "^3.2.0",
