@@ -21,7 +21,7 @@ const populate = async (): Promise<void> => {
 
     logger.info('Populating..');
     const first = new Questionary({
-        timer: 600,
+        timer: 200,
         questions: [
             {
                 question: 'Líquido graso de color verde amarillento que se obtiene prensando las aceitunas.',
