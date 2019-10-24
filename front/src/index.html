@@ -9,17 +9,23 @@
 </head>
 <body>
 <div id="timer">
-    <div id="time">{{time}}</div>
+    <div id="time">0</div>
     <div>segundos</div>
+</div>
+<div id="start">
+    <div id="container">
+        <h1>Pasa Palabra</h1>
+        <button id="play">Jugar</button>
+    </div>
 </div>
 <div id="alignment">
     <div id="question">
         <h4>Con la <span id="active-letter">A</span></h4>
         <h3 id="active-question">{{question}}</h3>
         <form id="awnser-form">
-            <input id="answer" autofocus type="text" placeholder="Respuesta">
+            <input id="answer" autocomplete="off" type="text" placeholder="Respuesta">
         </form>
-        <button id="next">Paso palabra</button>
+        <button id="next">Pasa Palabra</button>
     </div>
     <div id="circle-wrapper"></div>
 </div>

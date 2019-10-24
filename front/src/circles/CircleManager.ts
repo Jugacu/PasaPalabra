@@ -1,13 +1,20 @@
 import Questionary from '../types/Questionary';
-import APIResponse from "../types/APIResponse";
+import APIResponse from '../types/APIResponse';
 
 export default class CircleManager {
 
     private circles: HTMLElement[] = [];
     private activeIndex = 0;
     private time = 0;
+    private started = false;
+    private fetching = false;
 
+    private callbacks: Map<String, Function>;
     private questionary: Questionary;
+    private timerActive: boolean;
+    private timerTimeout: any;
+
+    private forminit = false;
 
     public constructor(
         private readonly container: HTMLElement
@@ -17,12 +24,37 @@ export default class CircleManager {
             throw new Error('Container must be an HTMLElement');
         }
 
+        this.callbacks = new Map<String, Function>();
+
+    }
+
+    public on(event: string, callback: Function): void {
+        this.callbacks.set(event, callback);
+    }
+
+    private getAndExecuteCallback(name: string, data ?: any): boolean {
+        const callback: Function = this.callbacks.get(name);
+
+        if (!callback) {
+            return false;
+        }
+
+        callback(data);
+        return true;
     }
 
     public async init(): Promise<void> {
 
+        if (this.fetching) {
+            return;
+        }
+
+        this.fetching = true;
+
         const response = await fetch('http://localhost:3500/questionary/random');
         let json: APIResponse<Questionary>;
+
+        this.fetching = false;
 
         try {
             json = await response.json();
@@ -31,29 +63,52 @@ export default class CircleManager {
             throw new Error('Error while fetching the API');
         }
 
-        console.log(this.questionary.questions)
-
         this.generate();
         this.initTimer();
-        this.setActiveQuestion();
+        this.setActive(0);
         this.initForm();
+        this.recalculateScore();
+
+        this.started = true;
+    }
+
+    private endGame(): void {
+        this.started = false;
+        this.getAndExecuteCallback('end');
+        this.stopTimer();
     }
 
     private initTimer(): void {
         this.time = this.questionary.timer;
+        this.timerActive = true;
+        clearTimeout(this.timerTimeout);
+        this.timer();
+    }
+
+    private stopTimer(): void {
+        this.timerActive = false;
+    }
+
+    private startTimer(): void {
+        this.timerActive = true;
         this.timer();
     }
 
     private timer(): void {
+        if (!this.timerActive) {
+            return;
+        }
+
         const el = document.querySelector('#time');
         this.time--;
         el.innerHTML = `${this.time}`;
 
         if (this.time === 0) {
+            this.endGame();
             return;
         }
 
-        setTimeout(() => {
+        this.timerTimeout = setTimeout(() => {
             this.timer();
         }, 1000);
     }
@@ -62,6 +117,7 @@ export default class CircleManager {
         // CleanUp
         this.circles = [];
         this.container.innerHTML = '';
+
         this.activeIndex = 0;
 
         let spanishSet = false;
@@ -114,11 +170,30 @@ export default class CircleManager {
             this.activeIndex = -1;
         }
 
+        let found = false;
+        let pending = 0;
+        
         for (let i = this.activeIndex + 1; i < this.circles.length; i++) {
             if (this.circles[i].classList.contains('pending')) {
+                found = true;
+                pending++;
                 this.activeIndex = i;
                 break;
             }
+        }
+
+        if (!found) {
+            for (let i = 0; i < this.circles.length; i++) {
+                if (this.circles[i].classList.contains('pending')) {
+                    pending++;
+                    this.activeIndex = i;
+                    break;
+                }
+            }
+        }
+
+        if (pending === 0) {
+            this.endGame();
         }
 
         this.setActive(this.activeIndex);
@@ -130,6 +205,7 @@ export default class CircleManager {
         }
 
         const el = this.circles[index];
+
         el.classList.remove('pending', 'correct');
         el.classList.add('error');
 
@@ -179,18 +255,32 @@ export default class CircleManager {
     }
 
     private initForm() {
+        const answerEl = document.querySelector<HTMLInputElement>('#answer');
+        answerEl.focus();
+
+        if (this.forminit) {
+            return;
+        }
+        this.forminit = true;
+
         const element = document.querySelector('#awnser-form');
+
         element.addEventListener('submit', e => {
             e.preventDefault();
-            const answerEl = document.querySelector<HTMLInputElement>('#answer');
-            if (answerEl.value.toLowerCase() === this.questionary.questions[this.activeIndex].result.toLowerCase()) {
-                this.activeCorrect();
-                this.next();
-            } else {
-                this.activeError();
-                this.next();
+
+            if (this.started) {
+                if (answerEl.value.toLowerCase() === this.questionary.questions[this.activeIndex].result.toLowerCase()) {
+                    this.activeCorrect();
+                    this.next();
+                } else if (answerEl.value !== '') {
+                    this.activeError();
+                    this.next();
+                } else {
+                    this.next();
+                }
+                answerEl.value = '';
             }
-            answerEl.value = '';
+
         });
     }
 }

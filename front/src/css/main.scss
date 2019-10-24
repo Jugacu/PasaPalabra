@@ -6,6 +6,7 @@ body {
 }
 
 #timer, #score {
+  z-index: 999;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,8 +18,9 @@ body {
   padding: 50px;
   width: 50px;
   height: 50px;
-  border: 2px solid black;
   border-radius: 50%;
+  color: white;
+  background: #004b8d;
 
   #time {
     font-size: 2em;
@@ -134,6 +136,40 @@ body {
 
   .correct {
     background: green;
+  }
+}
+
+#start {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99;
+  background: #206db1;
+
+  #container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 99;
+
+    h1 {
+      color: white;
+    }
+
+    #play {
+      color: white;
+      border: 3px solid #004b8d;
+      background: #094072;
+      padding: 15px 25px;
+      font-size: 1.6em;
+      cursor: pointer;
+
+      &:hover {
+        filter: brightness(1.3);
+      }
+    }
   }
 }
 
