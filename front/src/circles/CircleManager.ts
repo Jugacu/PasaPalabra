@@ -43,7 +43,7 @@ export default class CircleManager {
         return true;
     }
 
-    public async init(): Promise<void> {
+    public async init(fetchUrl: string): Promise<void> {
 
         if (this.fetching) {
             return;
@@ -51,7 +51,7 @@ export default class CircleManager {
 
         this.fetching = true;
 
-        const response = await fetch('http://localhost:3500/questionary/random');
+        const response = await fetch(fetchUrl);
         let json: APIResponse<Questionary>;
 
         this.fetching = false;
@@ -172,7 +172,7 @@ export default class CircleManager {
 
         let found = false;
         let pending = 0;
-        
+
         for (let i = this.activeIndex + 1; i < this.circles.length; i++) {
             if (this.circles[i].classList.contains('pending')) {
                 found = true;

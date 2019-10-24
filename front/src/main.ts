@@ -11,7 +11,7 @@ document.querySelector('#next').addEventListener('click', () => {
 });
 
 document.querySelector('#play').addEventListener('click', () => {
-    circleManager.init();
+    circleManager.init('http://localhost:3500/questionary/random');
     document.querySelector<HTMLElement>('#start').style.display = 'none';
 });
 
